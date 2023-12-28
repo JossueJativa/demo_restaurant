@@ -36,20 +36,20 @@ class Menu(models.Model):
             return self.photo.url
         return None
 
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    total = models.FloatField()
-    status = models.CharField(max_length=200)
-    date = models.DateTimeField(auto_now_add=True)
-
 class Food(models.Model):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     price = models.FloatField()
     photo = models.ImageField(upload_to='media', null=True, blank=True)
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Food, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField()
+    total = models.FloatField()
+    status = models.CharField(max_length=200)
+    date = models.DateTimeField(auto_now_add=True)
 
 class Table(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
