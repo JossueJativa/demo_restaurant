@@ -44,9 +44,9 @@ class TableSerializer(serializers.ModelSerializer):
         model = Table
         fields = '__all__'
 
-class BillSerializer(serializers.ModelSerializer):
+class BillHeaderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Bill
+        model = BillHeader
         fields = '__all__'
 
 class BillDetailSerializer(serializers.ModelSerializer):

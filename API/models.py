@@ -57,16 +57,12 @@ class Table(models.Model):
     number = models.IntegerField()
 
 # Facturacion
-class Bill(models.Model):
+class BillHeader(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    total = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=200)
-    payment = models.CharField(max_length=200)
 
 class BillDetail(models.Model):
-    factura = models.ForeignKey(Bill, on_delete=models.CASCADE)
+    BillHeader = models.ForeignKey(BillHeader, on_delete=models.CASCADE, default=1)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total = models.FloatField()

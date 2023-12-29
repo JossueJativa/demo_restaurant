@@ -99,9 +99,9 @@ class TableViewSet(viewsets.ModelViewSet):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
-class BillViewSet(viewsets.ModelViewSet):
-    queryset = Bill.objects.all()
-    serializer_class = BillSerializer
+class BillHeaderViewSet(viewsets.ModelViewSet):
+    queryset = BillHeader.objects.all()
+    serializer_class = BillHeaderSerializer
 
 class BillDetailViewSet(viewsets.ModelViewSet):
     queryset = BillDetail.objects.all()
