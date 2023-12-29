@@ -41,7 +41,12 @@ class Food(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
     photo = models.ImageField(upload_to='media', null=True, blank=True)
-    
+
+# Facturacion
+class BillHeader(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
@@ -50,19 +55,9 @@ class Order(models.Model):
     total = models.FloatField()
     status = models.CharField(max_length=200)
     date = models.DateTimeField(auto_now_add=True)
+    BillHeader = models.ForeignKey(BillHeader, on_delete=models.CASCADE, null=True)
 
 class Table(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     number = models.IntegerField()
-
-# Facturacion
-class BillHeader(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
-
-class BillDetail(models.Model):
-    BillHeader = models.ForeignKey(BillHeader, on_delete=models.CASCADE, default=1)
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    total = models.FloatField()

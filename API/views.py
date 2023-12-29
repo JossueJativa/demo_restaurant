@@ -102,7 +102,3 @@ class TableViewSet(viewsets.ModelViewSet):
 class BillHeaderViewSet(viewsets.ModelViewSet):
     queryset = BillHeader.objects.all()
     serializer_class = BillHeaderSerializer
-
-class BillDetailViewSet(viewsets.ModelViewSet):
-    queryset = BillDetail.objects.all()
-    serializer_class = BillDetailSerializer
