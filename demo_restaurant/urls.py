@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/API/', include_docs_urls(title="Api Documentacion")),
     path('api/', include('API.urls')),
+    path('', include('ordersTable.urls')),
 ]
 
 # Agrega la configuración de archivos de medios si estás en un entorno de desarrollo

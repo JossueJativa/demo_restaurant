@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <table class="order-table">
+            <thead class="navbar">
+                <tr class="navbar-color">
+                    <th class="container-order">Detalle de la orden</th>
+                    <th class="container-number-order"># Numero de orden</th>
+                    <th class="container-status-order">Estado de la orden</th>
+                </tr>
+            </thead>
+            <tbody id="tarjet-complement">
+
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

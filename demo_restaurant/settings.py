@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Personal Apps
     'API',
+    'ordersTable',
 
     # API core
     'coreapi',
