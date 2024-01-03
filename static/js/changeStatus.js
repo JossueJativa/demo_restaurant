@@ -1,5 +1,5 @@
 function changeStatusPreparando(id) {
-    var url = `http://127.0.0.1:8000/api/orders/${id}/`;
+    var url = `http://127.0.0.1:8080/api/orders/${id}/`;
     var data = { "status": "Preparando" };
     fetch(url, {
         method: 'PATCH',
@@ -14,7 +14,7 @@ function changeStatusPreparando(id) {
 }
 
 function changeStatusListo(id) {
-    var url = `http://127.0.0.1:8000/api/orders/${id}/`;
+    var url = `http://127.0.0.1:8080/api/orders/${id}/`;
     var data = { "status": "Listo" };
     fetch(url, {
         method: 'PATCH',
@@ -29,7 +29,7 @@ function changeStatusListo(id) {
 }
 
 function changeStatusEntregado(id) {
-    var url = `http://127.0.0.1:8000/api/orders/${id}/`;
+    var url = `http://127.0.0.1:8080/api/orders/${id}/`;
     var data = { "status": "Entregado" };
     fetch(url, {
         method: 'PATCH',

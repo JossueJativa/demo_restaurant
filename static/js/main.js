@@ -1,6 +1,7 @@
 const loadTables = async () => {
+    var tablesShow = [];
     try {
-        const responseTables = await fetch("http://127.0.0.1:8000/api/tables/", {
+        const responseTables = await fetch("http://127.0.0.1:8080/api/tables/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -8,7 +9,7 @@ const loadTables = async () => {
         });
         const tables = await responseTables.json();
 
-        const responseOrders = await fetch("http://127.0.0.1:8000/api/orders/", {
+        const responseOrders = await fetch("http://127.0.0.1:8080/api/orders/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -16,7 +17,7 @@ const loadTables = async () => {
         })
         const orders = await responseOrders.json();
 
-        const responseProducts = await fetch("http://127.0.0.1:8000/api/foods/", {
+        const responseProducts = await fetch("http://127.0.0.1:8080/api/foods/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -24,7 +25,7 @@ const loadTables = async () => {
         })
         const products = await responseProducts.json();
 
-        const responseUsers = await fetch("http://127.0.0.1:8000/api/users/", {
+        const responseUsers = await fetch("http://127.0.0.1:8080/api/users/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -34,11 +35,10 @@ const loadTables = async () => {
 
         for (let i = 0; i < tables.length; i++) {
             for (let j = 0; j < orders.length; j++) {
-                if (tables[i].order == orders[j].id) {
-                    print(tables[i].order.status)
-                    if(tables[i].order.status != "Entregado"){    
+                if (tables[i].order === orders[j].id) {
+                    if (orders[j].status != "Entregado") {
                         tables[i].order = orders[j];
-                    
+
                         for (let k = 0; k < products.length; k++) {
                             if (orders[j].dish == products[k].id) {
                                 tables[i].order.dish = products[k].name;
@@ -52,6 +52,7 @@ const loadTables = async () => {
                                 };
                             }
                         }
+                        tablesShow.push(tables[i]);
                     }
                 }
             }
@@ -59,8 +60,10 @@ const loadTables = async () => {
 
         let tableData = "";
 
-        tables.forEach(elements => {
+        tablesShow.forEach(elements => {
             const status = elements.order.status;
+            let statusColor;
+
             switch (status) {
                 case 'Preparando':
                     statusColor = 'orange';
@@ -72,6 +75,7 @@ const loadTables = async () => {
                     statusColor = 'white';
                     break;
             }
+
             tableData += `
             <tr>
                 <td class="container-order">
