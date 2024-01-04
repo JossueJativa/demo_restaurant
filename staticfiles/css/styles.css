@@ -53,3 +53,34 @@ table tr {
     padding-top: 3%;
     padding-bottom: 3%;
 }
+
+.button-change-status-prep, .button-change-status-read, .button-change-status-done{
+    padding: 0.5rem;
+    text-align: center;
+    margin: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+/*El hover*/
+.button-change-status-prep:hover, .button-change-status-read:hover, .button-change-status-done:hover {
+    opacity: 0.8;
+}
+
+.button-change-status-prep {
+    background-color: orange;
+    border: 1px solid #f5f5f5;
+}
+
+.button-change-status-read {
+    background-color: green;
+    border: 1px solid #f5f5f5;
+}
+
+.button-change-status-done {
+    background-color: blue;
+    border: 1px solid #f5f5f5;
+}

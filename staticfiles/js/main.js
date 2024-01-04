@@ -1,6 +1,7 @@
 const loadTables = async () => {
+    var tablesShow = [];
     try {
-        const responseTables = await fetch("http://127.0.0.1:8000/api/tables/", {
+        const responseTables = await fetch("http://127.0.0.1:8080/api/tables/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -8,7 +9,7 @@ const loadTables = async () => {
         });
         const tables = await responseTables.json();
 
-        const responseOrders = await fetch("http://127.0.0.1:8000/api/orders/", {
+        const responseOrders = await fetch("http://127.0.0.1:8080/api/orders/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -16,7 +17,7 @@ const loadTables = async () => {
         })
         const orders = await responseOrders.json();
 
-        const responseProducts = await fetch("http://127.0.0.1:8000/api/foods/", {
+        const responseProducts = await fetch("http://127.0.0.1:8080/api/foods/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -24,7 +25,7 @@ const loadTables = async () => {
         })
         const products = await responseProducts.json();
 
-        const responseUsers = await fetch("http://127.0.0.1:8000/api/users/", {
+        const responseUsers = await fetch("http://127.0.0.1:8080/api/users/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
@@ -34,28 +35,47 @@ const loadTables = async () => {
 
         for (let i = 0; i < tables.length; i++) {
             for (let j = 0; j < orders.length; j++) {
-                if (tables[i].order == orders[j].id) {
-                    tables[i].order = orders[j];
-                    for (let k = 0; k < products.length; k++) {
-                        if (orders[j].dish == products[k].id) {
-                            tables[i].order.dish = products[k].name;
+                if (tables[i].order === orders[j].id) {
+                    if (orders[j].status != "Entregado") {
+                        tables[i].order = orders[j];
+
+                        for (let k = 0; k < products.length; k++) {
+                            if (orders[j].dish == products[k].id) {
+                                tables[i].order.dish = products[k].name;
+                            }
                         }
-                    }
-                    for (let k = 0; k < users.length; k++) {
-                        if (orders[j].user == users[k].id) {
-                            tables[i].order.user = {
-                                "name": users[k].username,
-                                "phone": users[k].phone,
-                            };
+                        for (let k = 0; k < users.length; k++) {
+                            if (orders[j].user == users[k].id) {
+                                tables[i].order.user = {
+                                    "name": users[k].username,
+                                    "phone": users[k].phone,
+                                };
+                            }
                         }
+                        tablesShow.push(tables[i]);
                     }
                 }
             }
         }
 
-        let tableData = ""; // Mover la declaración fuera del bucle
+        let tableData = "";
 
-        tables.forEach(elements => {
+        tablesShow.forEach(elements => {
+            const status = elements.order.status;
+            let statusColor;
+
+            switch (status) {
+                case 'Preparando':
+                    statusColor = 'orange';
+                    break;
+                case 'Listo':
+                    statusColor = 'green';
+                    break;
+                default:
+                    statusColor = 'white';
+                    break;
+            }
+
             tableData += `
             <tr>
                 <td class="container-order">
@@ -67,8 +87,11 @@ const loadTables = async () => {
                 <td class="container-number-order">
                     Numero de orden: ${elements.order.BillHeader}
                 </td>
-                <td class="container-status-order">
-                    Estado: ${elements.order.status}
+                <td class="container-status-order" style="background-color: ${statusColor};">
+                    Estado: ${elements.order.status} <br>
+                    <button class="button-change-status-prep" onclick="changeStatusPreparando(${elements.order.id})">Cambiar a Preparando</button>
+                    <button class="button-change-status-read" onclick="changeStatusListo(${elements.order.id})">Cambiar a Listo</button>
+                    <button class="button-change-status-done" onclick="changeStatusEntregado(${elements.order.id})">Cambiar a Entregado</button>
                 </td>
             </tr>
             `;
@@ -91,5 +114,5 @@ window.addEventListener("load", async () => {
     // Recargar la página cada minuto
     setInterval(() => {
         location.reload();
-    }, 30000);
+    }, 10000);
 });
